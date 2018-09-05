@@ -45,4 +45,8 @@ public class DoubleQuarterGumballMachine extends GumballMachine
         
         money -= 50;
     }
+    
+    void printRemainMessage() {
+        
+    }
 }

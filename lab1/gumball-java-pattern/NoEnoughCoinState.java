@@ -10,7 +10,7 @@ public class NoEnoughCoinState implements State {
     public void insertCoin(int coin) {
         gumballMachine.setMoney(coin);
         if (gumballMachine.hasEnoughMoney()) {
-            System.out.println("You inserted enough coins.");
+            System.out.println("You inserted a coin. The coin is enough!");
             gumballMachine.setState(gumballMachine.getEnoughCoinState());
         } else {
             System.out.println("You inserted a coin.");

@@ -84,6 +84,8 @@ public abstract class GumballMachine {
     public State getSoldState() {
         return soldState;
     }
+    
+    abstract void printRemainMessage();
  
     public String toString() {
         StringBuffer result = new StringBuffer();

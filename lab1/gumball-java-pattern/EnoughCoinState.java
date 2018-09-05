@@ -11,6 +11,7 @@ public class EnoughCoinState implements State {
   
     public void insertCoin(int coin) {
         gumballMachine.setMoney(coin);
+        System.out.println("You inserted a coin.");
     }
  
     public void ejectCoin() {
