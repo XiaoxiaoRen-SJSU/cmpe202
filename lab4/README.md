@@ -1,80 +1,77 @@
 -------------------------------------------------
 
-​							                          Customer
+							      Customer
 
-------------
+-------------------------------------------------
 
-​		              	Responsibility                                 |                 		  Collaborator
+	Responsibility            |       Collaborator
 
------------
+-------------------------------------------------
 
-​                         Send reply message.                            |                		 MsgManager 
+ Send reply message       |    		 MsgManager 
 
----------
+-------------------------------------------------
 
 
+-------------------------------------------------
+					       TableManager
 
------------
+-------------------------------------------------
 
-​							                          TableManager
+Responsibility | Collaborator
 
-------
+-------------------------------------------------
+Ask for customers. 			| 					WaitList
 
-​		              	Responsibility                                 |                		   Collaborator
+Assign table.						|				
 
------
+Send message.					  |				     MsgManager
 
-​               		Ask for customers. 				  | 					WaitList
+Get message.					  | 				     MsgManager
 
-​			Assign table.						  |				
-
-​			Send message.					  |				     MsgManager
-
-​			Get message.					  | 				     MsgManager
-
-------
+-------------------------------------------------
 
 
 
--------
+-------------------------------------------------
 
-​							                          WaitList
+              WaitList
 
-------
+-------------------------------------------------
 
-​		              	Responsibility                                 |                		   Collaborator
+Responsibility    |     Collaborator
 
-------
+-------------------------------------------------
 
-​		Add customer to waitlist.				  |           			     
+Add customer to waitlist.				  |           			     
 
-​		Remove customer from waitlist.		  |				
+Remove customer from waitlist.		  |				
 
 Find a customer the table can accommodate. 	  | 
 
-​		           Send message.					  |				MsgManager
+Send message.					  |				MsgManager
 
-​			   Get Message.					  | 				MsgManager
+Get Message.					  | 				MsgManager
 
---------
+-------------------------------------------------
 
 
 
-----------
+-------------------------------------------------
 
-​							                          MsgManager
+               MsgManager
 
-------
+-------------------------------------------------
 
-​		              	Responsibility                                 |                		   Collaborator
+Responsibility    |     Collaborator
 
-------
+-------------------------------------------------
 
-​			Send message.					  |		  Customer or TableManager or Waitlist					
+Send message			|		  Customer or TableManager or Waitlist			
 
-​			Get message.					  |		  Customer or TableManager or Waitlist			
+Get message.					  |		  Customer or TableManager or Waitlist			
 
----------
+-------------------------------------------------
 
 
 
