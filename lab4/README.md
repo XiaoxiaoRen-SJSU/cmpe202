@@ -1,84 +1,50 @@
--------------------------------------------------
+# CRC Cards
 
-							      Customer
+`Customer`
 
--------------------------------------------------
+| Responsibility | Collaborator |
+| ---- | ---- |
+| Send reply message | MessageManager |
 
-	Responsibility            |       Collaborator
+`Table`
 
--------------------------------------------------
+| Responsibility | Collaborator |
+| ---- | ---- |
+| Obey the scheduling of TableManager | TableManager |
 
- Send reply message       |    		 MsgManager 
+`TableManager`
 
--------------------------------------------------
+| Responsibility | Collaborator |
+| ---- | ---- |
+| Request customer with accommodatable party size | Waitlist |
+| Accomadate customers | |
+| Send message | MessageManager |
+| Get response | MessageManager |
 
+`MessageManager`
 
--------------------------------------------------
-					       TableManager
+| Responsibility | Collaborator |
+| ---- | ---- |
+| Receive message | Waitlist, TableManager, Customer |
+| Send message | Waitlist, TableManager, Customer |
 
--------------------------------------------------
+`Waitlist`
 
-Responsibility | Collaborator
+| Responsibility | Collaborator |
+| ---- | ---- |
+| Add customer to waitlist | Customer |
+| Remove customer from waitlist | Customer, TableManager |
+| Find next customer for table | TableManager |
+| Assign customer to TableManager | TableManager |
+| Get message | MessageManager |
+| Send message | MessageManager |
 
--------------------------------------------------
-Ask for customers. 			| 					WaitList
+# WHICH Pattern And WHY
 
-Assign table.						|				
+The pattern used here is **Mediator**. 
 
-Send message.					  |				     MsgManager
+The initial requirement can be viewed as assigning appropriate customer to the appropriate table. This is a "many(customers) -to-many(tables)" mapping. **Mediator** pattern is  designed for handling exatcly this scenario, by adding a mediator in between as a bridge to connect both ends. Benefit of this is both ends are now weakly instead of strongly coupled with each other. Each is only directly coupled with the mediator, making it easy to change  behavior of each independently and simplified the N-to-N convoluted network to a cleaner N-to-one-to-N network.
 
-Get message.					  | 				     MsgManager
+In my implementation, I assign a `TableManager` for each `Table`, so it could have more communicating / scheduling functions. The `Customer`s are producers (producing information like size of party, name, telephone number) and `TableManager`s are consumers (trying to fetch the appropriate customer information and assign the table for that customer, if it's vacant). The `Waitlist` here serves as the mediator coordinating both the `TableManager`s and `Customer`s.
 
--------------------------------------------------
-
-
-
--------------------------------------------------
-
-              WaitList
-
--------------------------------------------------
-
-Responsibility    |     Collaborator
-
--------------------------------------------------
-
-Add customer to waitlist.				  |           			     
-
-Remove customer from waitlist.		  |				
-
-Find a customer the table can accommodate. 	  | 
-
-Send message.					  |				MsgManager
-
-Get Message.					  | 				MsgManager
-
--------------------------------------------------
-
-
-
--------------------------------------------------
-
-               MsgManager
-
--------------------------------------------------
-
-Responsibility    |     Collaborator
-
--------------------------------------------------
-
-Send message			|		  Customer or TableManager or Waitlist			
-
-Get message.					  |		  Customer or TableManager or Waitlist			
-
--------------------------------------------------
-
-
-
-
-
-The pattern I use is Mediator. 
-
-In relationship between WaitList, Customer and TableManager, WaitList is as a mediator who coordinate TableManager and Customer. Using mediator can change the many to many mapping of table and customer into two many-to-one mapping, thus promoting loose coupling .
-
-In relationship between MsgManager, WaitList, TableManager and Customer, MsgManager is as a mediator who is responsible for sending message between WaitList and Customer(or between TableManager and Customer). The reason using this pattern is the same.
+The message sending process can also be viewed as another "many(`TableManager`s or `WaitList`)-to-many(`Customer`s). I introduced `MessageManager` as the mediator here, passing messages (confirmation message, table-ready message, customer's reply message) between all three parties involved.
